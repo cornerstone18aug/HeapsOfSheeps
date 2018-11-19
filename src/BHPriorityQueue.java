@@ -42,8 +42,9 @@ public class BHPriorityQueue<K extends Comparable, V> implements VCPriorityQueue
     public VCPriorityQueue<K, V> merge(VCPriorityQueue<K, V> other) {
         ALPriorityQueue<K, V> otherQ = ((ALPriorityQueue) other);
         for (Entry<K, V> entry : otherQ.getQueue()) {
-            this.queue.add(entry);
+            this.enqueue(entry.getKey(), entry.getValue());
         }
+
         return this;
     }
 
