@@ -15,8 +15,7 @@ public class UnitTest {
     }
     @Test
     public void testBHPriorityQueue() throws ExecutionControl.ExecutionControlException {
-        throw new ExecutionControl.NotImplementedException("Not implemented");
-//        testPriorityQueue(new BHPriorityQueue<Integer, String>());
+        testPriorityQueue(new BHPriorityQueue<Integer, String>());
     }
 
     public void testPriorityQueue(VCPriorityQueue queueInstance) {
