@@ -37,12 +37,44 @@ public class DLPriorityQueue<K extends Comparable, V> implements VCPriorityQueue
         return this.queue.pop();
     }
 
+    public void setQueue(LinkedList<Entry<K, V>> queue) {
+        this.queue = queue;
+    }
+
     @Override
     public VCPriorityQueue<K, V> merge(VCPriorityQueue<K, V> other) {
-        ALPriorityQueue<K, V> otherQ = ((ALPriorityQueue) other);
-        for (Entry<K, V> entry : otherQ.getQueue()) {
-            this.queue.add(entry);
+        int i = 0;
+        int j = 0;
+
+        LinkedList<Entry<K, V>> mergedQueue = new LinkedList<>();
+        DLPriorityQueue<K, V> otherQ = (DLPriorityQueue<K, V>) other;
+        while (i < this.queue.size() && j < other.size()) {
+            if (this.queue.get(i).getKey().compareTo(otherQ.queue.get(j).getKey()) < 0) {
+                mergedQueue.add(this.queue.get(i));
+                i++;
+            } else {
+                mergedQueue.add(otherQ.queue.get(j));
+                j++;
+            }
         }
+        if (i != this.queue.size()) {
+            while (i < this.queue.size()) {
+                mergedQueue.add(this.queue.get(i));
+                i++;
+            }
+        }
+        if (j != otherQ.queue.size()) {
+            while (j < otherQ.queue.size()) {
+                mergedQueue.add(otherQ.queue.get(j));
+                j++;
+            }
+        }
+        this.setQueue(mergedQueue);
+//
+//        ALPriorityQueue<K, V> otherQ = ((ALPriorityQueue) other);
+//        for (Entry<K, V> entry : otherQ.getQueue()) {
+//            this.enqueue(entry.getKey(), entry.getValue());
+//        }
         return this;
     }
 }
