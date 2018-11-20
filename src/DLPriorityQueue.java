@@ -22,8 +22,19 @@ public class DLPriorityQueue<K extends Comparable, V> implements VCPriorityQueue
     @Override
     public Entry<K, V> enqueue(K key, V value) throws IllegalArgumentException {
         Entry<K, V> newEntry = new Entry<>(key, value);
-        this.queue.add(new Entry<K, V>(key, value));
-        Collections.sort(queue, (item1, item2) -> item1.getKey().compareTo(item2.getKey()));
+
+        if (isEmpty()) {
+            queue.add(newEntry);
+            return newEntry;
+        }
+
+        int i;
+        for(i = 0; i < queue.size(); i++) {
+            if (queue.get(i).getKey().compareTo(newEntry.getKey()) >= 0) {
+                break;
+            }
+        }
+        queue.add(i, newEntry);
         return newEntry;
     }
 
@@ -70,11 +81,6 @@ public class DLPriorityQueue<K extends Comparable, V> implements VCPriorityQueue
             }
         }
         this.setQueue(mergedQueue);
-//
-//        ALPriorityQueue<K, V> otherQ = ((ALPriorityQueue) other);
-//        for (Entry<K, V> entry : otherQ.getQueue()) {
-//            this.enqueue(entry.getKey(), entry.getValue());
-//        }
         return this;
     }
 }
